@@ -16,7 +16,8 @@ public class Main {
                 - Результатом операции деления является целое число, остаток отбрасывается;
                 - Также учтите, что в римской системе счисления нет отрицательных чисел
                 - Для завершения работы, введите слово "завершить\"""");
-        while (loopProgram) calc();
+        while (loopProgram)
+            calc();
     }
 
     private static void calc() throws NotAllowedInputException {
@@ -32,11 +33,13 @@ public class Main {
     private static String calc(String input) throws NotAllowedInputException {
         String[] part = input.split(" ");
         if (part.length != 3) throw new NotAllowedInputException();
+
         boolean arabic;
         String firstNumber = part[0];
         String theSymbol = part[1];
         String secondNumber = part[2];
         int firstNum, secondNum;
+
         if (isArabic(firstNumber) && isArabic(secondNumber)) {
             arabic = true;
             firstNum = Integer.parseInt(firstNumber);
@@ -48,6 +51,7 @@ public class Main {
         }
         if (firstNum < 0 || firstNum > 10 || secondNum < 0 || secondNum > 10)
             throw new NotAllowedInputException();
+
         int answer = switch (theSymbol) {
             case "+" -> firstNum + secondNum;
             case "-" -> firstNum - secondNum;
@@ -67,6 +71,7 @@ public class Main {
     public static boolean isArabic(String number) throws NotAllowedInputException {
         boolean roman = false;
         boolean arabic = false;
+
         for (int i = 0; i < number.length(); i++) {
             if (number.charAt(i) == 'I' || number.charAt(i) == 'V' || number.charAt(i) == 'X')
                 roman = true;
@@ -75,12 +80,15 @@ public class Main {
             else
                 throw new NotAllowedInputException();
         }
-        if (roman && arabic) throw new NotAllowedInputException();
+        if (roman && arabic)
+            throw new NotAllowedInputException();
+
         return arabic;
     }
 
     public static int romanToArabic(String input) throws NotAllowedInputException {
         int result = 0;
+
         List<RomanNum> romanNumerals = RomanNum.getReverseSortedValues();
         int i = 0;
         while ((input.length() > 0) && (i < romanNumerals.size())) {
@@ -94,11 +102,13 @@ public class Main {
         }
         if (input.length() > 0)
             throw new NotAllowedInputException();
+
         return result;
     }
 
     public static String arabicToRoman(int number) {
         List<RomanNum> romanNumerals = RomanNum.getReverseSortedValues();
+
         int i = 0;
         StringBuilder sb = new StringBuilder();
         while (number > 0 && i < romanNumerals.size()) {
@@ -110,6 +120,7 @@ public class Main {
                 i++;
             }
         }
+
         return sb.toString();
     }
 }
