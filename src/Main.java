@@ -18,6 +18,7 @@ public class Main {
                 - Для завершения работы, введите слово "завершить\"""");
         while (loopProgram)
             calc();
+        System.out.println(RomanNum.getReverseSortedValues());
     }
 
     private static void calc() throws NotAllowedInputException {
@@ -73,9 +74,10 @@ public class Main {
         boolean arabic = false;
 
         for (int i = 0; i < number.length(); i++) {
-            if (number.charAt(i) == 'I' || number.charAt(i) == 'V' || number.charAt(i) == 'X')
+            char ch = number.charAt(i);
+            if (ch == 'I' || ch == 'V' || ch == 'X')
                 roman = true;
-            else if ((int) number.charAt(i) <= 57 && (int) number.charAt(i) >= 48)
+            else if ((int) ch <= 57 && (int) ch >= 48)
                 arabic = true;
             else
                 throw new NotAllowedInputException();
@@ -86,8 +88,30 @@ public class Main {
         return arabic;
     }
 
+    public static boolean checkRomanNumber(String number) {
+        boolean checked = true;
+
+        int IAmount = 0;
+        int VAmount = 0;
+        for (int i = 0; i < number.length(); i++) {
+            if (number.charAt(i) == 'I')
+                IAmount++;
+            if (number.charAt(i) == 'V')
+                VAmount++;
+            if (number.charAt(i) == 'I' && number.charAt(i + 2) == 'I' && (number.charAt(i + 1) == 'V' || number.charAt(i + 1) == 'X'))
+                checked = false;
+        }
+        if (IAmount > 3 || VAmount > 1)
+            checked = false;
+
+        return checked;
+    }
+
     public static int romanToArabic(String input) throws NotAllowedInputException {
         int result = 0;
+
+        if (!checkRomanNumber(input))
+            throw new NotAllowedInputException();
 
         List<RomanNum> romanNumerals = RomanNum.getReverseSortedValues();
         int i = 0;
